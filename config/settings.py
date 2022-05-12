@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,12 +39,16 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-THIRD_PARTY_APPS = ['django_countries',]
+THIRD_PARTY_APPS = ['django_countries','django_seed',]
 
 PROJECT_APPS = [
     'users.apps.UsersConfig',
     'rooms.apps.RoomsConfig',
     'core.apps.CoreConfig',
+    'reviews.apps.ReviewsConfig',
+    'reservations.apps.ReservationsConfig',
+    'lists.apps.ListsConfig',
+    'conversations.apps.ConversationsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -65,7 +69,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,3 +142,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 장고에서 만든 사용자를 상속받아 사용할 경우
 AUTH_USER_MODEL = 'users.User'
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+# BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR + '/media/'
+MEDIA_URL = '/media/'
