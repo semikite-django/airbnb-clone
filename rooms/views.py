@@ -2,8 +2,11 @@
 # from math import ceil
 # from django.shortcuts import render, redirect
 # from django.core.paginator import Paginator, EmptyPage
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+from django.http import Http404
 from . import models
 
 class HomeView(ListView):
@@ -16,6 +19,7 @@ class HomeView(ListView):
     # template_name = 'rooms/room_list.html'
 
     def get_context_data(self, **kwargs):
+        """ 클래스 뷰에서 Context를 넘길 때 사용 """
         context = super().get_context_data(**kwargs)
         now = timezone.now()
         context['now'] = now    # {{ now }} 로 사용할 수 있음.
@@ -53,3 +57,19 @@ class HomeView(ListView):
     #     'page_count': page_count,
     #     'page_range': range(1, page_count),
     # })
+
+
+class RoomDetail(DetailView):
+    model = models.Room
+
+# def room_detail(request, pk):
+#     try:
+#         room = models.Room.objects.get(pk=pk)
+#         return render(request, 'rooms/room_detail.html', context={
+#             'room': room,
+#         })
+#     except models.Room.DoesNotExist:
+#         raise Http404()
+#         # return redirect(reverse('core:home'))
+#
+
